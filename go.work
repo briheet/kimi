@@ -1,0 +1,7 @@
+go 1.25.4
+
+use (
+	./infra
+	./services/gateway
+	./services/user-service
+)

@@ -139,10 +139,22 @@
 
           devShells.default = pkgs.mkShell {
             buildInputs = [
-              pkgs.istioctl
-              pkgs.kind
-              pkgs.kubectl
+              pkgs.go_1_25
+              pkgs.gopls
+              pkgs.goperf
+              pkgs.golangci-lint
+              pkgs.golangci-lint-langserver
+              pkgs.delve
+
+              pkgs.rust-analyzer
+              pkgs.rustfmt
+              pkgs.cargo
             ];
+
+            shellHook = ''
+              export TERM=xterm-256color
+              export COLORTERM=truecolor
+            '';
 
           };
 
