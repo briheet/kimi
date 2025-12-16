@@ -5,20 +5,18 @@
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
   };
 
-  outputs = { self, nixpkgs }:
+  outputs = { self, nixpkgs, flake-utils, ...}:
+    flake-utils.lib.eachDefaultSystem (system:
     let
-      system = "aarch64-darwin";
-      pkgs = import nixpkgs { inherit system; };
+      pkgs = nixpkgs.legacyPackages.${system};
     in {
-      devShells.${system}.default = pkgs.mkShell {
-        buildInputs = with pkgs; [
-          
+      devShell = pkgs.mkShell {
+        buildInputs = [
+          pkgs.istioctl
+          pkgs.kind
+          pkgs.docker
+          pkgs.kubectl
         ];
-
-        shellHook = ''
-          echo "Place shell hooks here"
-        '';
-        
       };
-    };
+    });
 }
